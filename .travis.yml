@@ -15,13 +15,13 @@ before_install:
   - gcloud config ser compute/zone asia-east1-a
   - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t eefth/react-test -f ./client/Dockerfile.dev
+  - docker build -t eefth/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run eefth/react-test npm test -- --coverage
  
 deploy:
-  provide: script
+  provider: script
   script: bash ./deploy.sh
   on:
     branch: master 
